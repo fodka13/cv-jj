@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم الإدارة</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/plugins/bootstrap.min.css">
+  <style>
+    body { font-family: 'IBM Plex Sans Arabic', Tahoma, sans-serif; background: #f4f6fb; color: #1d1d1d; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 25px 20px; }
+    .dashboard-header { margin-bottom: 25px; }
+    .dashboard-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    .dashboard-header p { color: #555; margin-bottom: 0; }
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .stat-card, .section { background: #fff; border-radius: 14px; padding: 22px; box-shadow: 0 18px 50px rgba(24, 39, 75, 0.05); }
+    .stat-card h3 { margin: 0; font-size: 1rem; color: #666; }
+    .stat-card strong { display: block; font-size: 2.2rem; margin-top: 8px; color: #0d6efd; }
+    .section h2 { font-size: 1.35rem; margin-bottom: 18px; }
+    .section p { color: #5f6771; margin-bottom: 18px; }
+    .table-responsive { margin-bottom: 24px; }
+    .table thead th { background: #f7f9fc; border-color: #e9edf3; color: #333; }
+    .table td, .table th { vertical-align: middle; border-color: #e9edf3; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-card { display: flex; flex-direction: column; gap: 12px; }
+    .form-card input, .form-card textarea, .form-card select, .form-card button { width: 100%; }
+    .form-card textarea { min-height: 150px; resize: vertical; }
+    .form-card button { border: none; background: #0d6efd; color: #fff; font-weight: 600; transition: background 0.2s ease; }
+    .form-card button:hover { background: #0b5ed7; }
+    .back-link { display: inline-block; margin-top: 15px; color: #0d6efd; text-decoration: none; font-weight: 600; }
+    .back-link:hover { text-decoration: underline; }
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="dashboard-header">
+      <h1>لوحة تحكم الإدارة</h1>
+      <p>هنا يمكنك مراجعة نظرة عامة على المستخدمين، المنشورات، والأعمال، وإضافة محتوى جديد بسهولة.</p>
+    </div>
+
+    <div class="stats-row" id="stats">
+      <!-- Stats will be loaded here -->
+    </div>
+
+    <div class="section">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">المستخدمون</h2>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover" id="users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>اسم المستخدم</th>
+              <th>البريد الإلكتروني</th>
+              <th>الدور</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="4" class="text-center">جارٍ تحميل البيانات...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">المنشورات</h2>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover" id="posts-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>العنوان</th>
+              <th>المحتوى</th>
+              <th>تاريخ الإنشاء</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="4" class="text-center">جارٍ تحميل البيانات...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">الأعمال</h2>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover" id="works-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>العنوان</th>
+              <th>الفئة</th>
+              <th>تاريخ الإنشاء</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="4" class="text-center">جارٍ تحميل البيانات...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">إضافة محتوى جديد</h2>
+      </div>
+      <div class="form-grid">
+        <div class="form-card">
+          <h3>إضافة منشور جديد</h3>
+          <form id="post-form" enctype="multipart/form-data">
+            <input type="text" name="title" placeholder="العنوان" required>
+            <textarea name="content" placeholder="المحتوى" required></textarea>
+            <input type="file" name="cover_image" accept="image/*">
+            <button type="submit">نشر المنشور</button>
+          </form>
+        </div>
+        <div class="form-card">
+          <h3>إضافة عمل جديد</h3>
+          <form id="work-form" enctype="multipart/form-data">
+            <input type="text" name="title" placeholder="العنوان" required>
+            <select name="category" required>
+              <option value="logos">شعارات</option>
+              <option value="visual-identity">هويات بصرية</option>
+              <option value="social-media">وسائل التواصل الاجتماعي</option>
+            </select>
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">إضافة العمل</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <a class="back-link" href="/">العودة إلى الموقع</a>
+  </div>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>اسم المستخدم</th>
+            <th>البريد الإلكتروني</th>
+            <th>الدور</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Users will be loaded here -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>المنشورات</h2>
+      <table id="posts-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>العنوان</th>
+            <th>المحتوى</th>
+            <th>تاريخ الإنشاء</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Posts will be loaded here -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>الأعمال</h2>
+      <table id="works-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>العنوان</th>
+            <th>الفئة</th>
+            <th>تاريخ الإنشاء</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Works will be loaded here -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>إضافة منشور جديد</h2>
+      <form id="post-form" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="العنوان" required>
+        <textarea name="content" placeholder="المحتوى" required></textarea>
+        <input type="file" name="cover_image" accept="image/*">
+        <button type="submit">نشر</button>
+      </form>
+    </div>
+
+    <div class="section">
+      <h2>إضافة عمل جديد</h2>
+      <form id="work-form" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="العنوان" required>
+        <select name="category" required>
+          <option value="logos">شعارات</option>
+          <option value="visual-identity">هويات بصرية</option>
+          <option value="social-media">وسائل التواصل الاجتماعي</option>
+        </select>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">إضافة</button>
+      </form>
+    </div>
+
+    <a href="/">العودة إلى الموقع</a>
+  </div>
+
+  <script>
+    // Load stats
+    fetch('/api/admin/stats')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('stats').innerHTML = `
+          <div class="card">المستخدمون: ${data.users}</div>
+          <div class="card">المنشورات: ${data.posts}</div>
+          <div class="card">الأعمال: ${data.works}</div>
+        `;
+      });
+
+    // Load users
+    fetch('/api/admin/users')
+      .then(res => res.json())
+      .then(users => {
+        const tbody = document.querySelector('#users-table tbody');
+        tbody.innerHTML = users.map(user => `
+          <tr>
+            <td>${user.id}</td>
+            <td>${user.username}</td>
+            <td>${user.email}</td>
+            <td>${user.role}</td>
+          </tr>
+        `).join('');
+      });
+
+    // Load posts
+    fetch('/api/admin/posts')
+      .then(res => res.json())
+      .then(posts => {
+        const tbody = document.querySelector('#posts-table tbody');
+        tbody.innerHTML = posts.map(post => `
+          <tr>
+            <td>${post.id}</td>
+            <td>${post.title}</td>
+            <td>${post.content.substring(0, 100)}...</td>
+            <td>${new Date(post.created_at).toLocaleDateString('ar')}</td>
+          </tr>
+        `).join('');
+      });
+
+    // Load works
+    fetch('/api/admin/works')
+      .then(res => res.json())
+      .then(works => {
+        const tbody = document.querySelector('#works-table tbody');
+        tbody.innerHTML = works.map(work => `
+          <tr>
+            <td>${work.id}</td>
+            <td>${work.title}</td>
+            <td>${work.category}</td>
+            <td>${new Date(work.created_at).toLocaleDateString('ar')}</td>
+          </tr>
+        `).join('');
+      });
+
+    // Handle post form
+    document.getElementById('post-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch('/admin/post', {
+        method: 'POST',
+        body: formData
+      }).then(() => location.reload());
+    });
+
+    // Handle work form
+    document.getElementById('work-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      fetch('/admin/work', {
+        method: 'POST',
+        body: formData
+      }).then(() => location.reload());
+    });
+  </script>
+</body>
+</html>
