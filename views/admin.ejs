@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+  <div class="analytics">
+    <div class="card">Users: <%= users %></div>
+    <div class="card">Posts: <%= posts %></div>
+    <div class="card">Works: <%= works %></div>
+  </div>
+
+  <h2>Create New Post</h2>
+  <form action="/admin/post" method="post" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="Title" required>
+    <textarea name="content" placeholder="Content"></textarea>
+    <input type="file" name="cover_image">
+    <button type="submit">Publish</button>
+  </form>
+
+  <h2>Add New Work</h2>
+  <form action="/admin/work" method="post" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="Title" required>
+    <select name="category">
+      <option value="logos">Logos</option>
+      <option value="visual-identity">Visual Identity</option>
+      <option value="social-media">Social Media</option>
+    </select>
+    <input type="file" name="image" required>
+    <button type="submit">Add Work</button>
+  </form>
+
+  <a href="/">Back to Site</a>
+</body>
+</html>

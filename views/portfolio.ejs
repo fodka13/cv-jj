@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="/assets/css/plugins/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/plugins/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/css/plugins/slick.css">
+  <link rel="stylesheet" href="/assets/css/plugins/lightgallery.min.css">
+  <link rel="stylesheet" href="/assets/css/plugins/animate.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <!-- Include header -->
+  <header>
+    <div class="cs-main_header_right">
+      <a id="admin-link" href="/admin" style="display: none;" class="cs-login_btn">Admin Dashboard</a>
+      <button id="login-btn" data-bs-toggle="modal" data-bs-target="#authModal" class="cs-login_btn">Log In</button>
+    </div>
+  </header>
+
+  <h1>Portfolio</h1>
+  <% if (works && works.length > 0) { %>
+    <% works.forEach(work => { %>
+      <div class="work">
+        <h2><%= work.title %></h2>
+        <p>Category: <%= work.category %></p>
+        <% if (work.image) { %>
+          <img src="/uploads/<%= work.image %>" alt="Work Image">
+        <% } %>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No works available.</p>
+  <% } %>
+
+  <script src="/assets/js/plugins/jquery-3.6.0.min.js"></script>
+  <script src="/assets/js/plugins/isotope.pkg.min.js"></script>
+  <script src="/assets/js/plugins/jquery.slick.min.js"></script>
+  <script src="/assets/js/plugins/jquery.counter.min.js"></script>
+  <script src="/assets/js/plugins/lightgallery.min.js"></script>
+  <script src="/assets/js/plugins/wow.min.js"></script>
+  <script src="/assets/js/plugins/gsap.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
